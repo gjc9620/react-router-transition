@@ -1,0 +1,26 @@
+.react-router-transition-animation{
+
+  height: 100%;
+
+  > *:nth-child(2) {
+    position: absolute;
+    right: -100%;
+    top: 0px;
+    width: 100%;
+  }
+
+}
+
+.react-router-transition-go {
+  animation: react-router-transition-shift 1s ;
+}
+
+@keyframes react-router-transition-shift {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-100%);
+  }
+}
+
