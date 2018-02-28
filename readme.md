@@ -1,3 +1,3 @@
 ## react-router-transition
 
-<img src="./examples/demo.gif">
+<img src="./examples/example.gif">
