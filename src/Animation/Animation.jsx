@@ -4,7 +4,7 @@ import classnames from 'classnames';
 
 
 const Null  = class Null extends Component { render(){ return null  } };
-const animationTime = 2000;
+const animationTime = 700;
 
 
 function insertMacroTask(fun, callBack, turn = 1) {
@@ -47,13 +47,6 @@ class Animation extends React.Component {
     this.history = [ props.location ];
     this.updateQueue = [];
   }
-  componentDidMount() {
-    // debugger
-    // window.go1 = this.props.router.push('/contacts/departmentDetail?departmentIdList=30002');
-    // window.setTimeout(()=>{
-    //   window.go2 = this.props.router.push('/contacts/departmentDetail?departmentIdList=30002%2C31002');
-    // });
-  }
   componentWillReceiveProps(nextProps) {
     const {
       location:{
@@ -83,47 +76,32 @@ class Animation extends React.Component {
     ){
       this.updateQueue.push(async ()=>{
         const findIndex = this.history.reduceRight((index, h, i)=> h.key === nextKey? i: index, -1);
-        console.log('%c index', 'color: pink');
-        console.log(findIndex);
         
         if(findIndex === -1){
           await this.forward(nextProps);
           this.history.push(nextProps.location);
-          console.log('%c this.history', 'color: blue');
-          console.log(this.history);
           return
         }
         await this.back(nextProps);
         this.history = this.history.slice(0, findIndex + 1);
-        console.log('%c this.history', 'color: red');
-        console.log(this.history);
       });
       
       this.runAllTask();
     }
   }
   async runAllTask(){
-    debugger
-    
     if(this.isRuning) return
     this.isRuning = true;
     for(let i=0; i<this.updateQueue.length; i++){
-      console.log(this.updateQueue);
       const task = this.updateQueue[i];
-      console.log('start')
       // await new Promise(r=>insertMacroTask(()=>r(task()), 10));
       await new Promise(r=>window.setTimeout(()=>r(task()), 100));
-      console.log('done')
     }
-    console.log('alldone')
-    
     
     this.updateQueue = [];
     this.isRuning = false;
   }
   forward(nextProps){
-    console.log('%c \'forward start\'', 'background: #222; color: #bada55');
-    
     const {
       location:{
         pathname: nextPathname,
@@ -139,7 +117,6 @@ class Animation extends React.Component {
       });
       
       window.setTimeout(()=>{
-        console.log('forward done');
         this.setState({
           NextCom: <Null key='next'/>,
           CurrCom: this.state.NextCom,
@@ -149,7 +126,6 @@ class Animation extends React.Component {
     })
   }
   back(nextProps){
-    console.log('%c back start', 'background: #222; color: #bada55');
     const {
       location:{
         pathname: nextPathname,
@@ -165,7 +141,6 @@ class Animation extends React.Component {
       });
       
       window.setTimeout(()=>{
-        console.log('back done')
         this.setState({
           PreCom: <Null key='previous'/>,
           CurrCom: this.state.PreCom,
@@ -182,15 +157,6 @@ class Animation extends React.Component {
       isForwarding,
       isBacking,
     } = this.state;
-    
-    console.log(          classnames(
-      'react-router-transition-animation',
-      {
-        'react-router-transition-forward': isForwarding,
-        'react-router-transition-back': isBacking,
-      }
-      )
-    )
     
     return (
       <section

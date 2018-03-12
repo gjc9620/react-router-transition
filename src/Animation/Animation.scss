@@ -1,8 +1,17 @@
+$animationTime: 600;
+
 .react-router-transition-animation{
 
   height: 100%;
 
-  > *:nth-child(2) {
+  > *:nth-child(1) {
+    position: absolute;
+    left: -100%;
+    top: 0px;
+    width: 100%;
+  }
+
+  > *:nth-child(3) {
     position: absolute;
     right: -100%;
     top: 0px;
@@ -11,16 +20,30 @@
 
 }
 
-.react-router-transition-go {
-  animation: react-router-transition-shift 1s ;
+.react-router-transition-forward {
+  animation: react-router-transition-forward #{$animationTime}ms ;
+  pointer-events: none;
 }
 
-@keyframes react-router-transition-shift {
+.react-router-transition-back {
+  animation: react-router-transition-back #{$animationTime}ms;
+  pointer-events: none;
+}
+
+@keyframes react-router-transition-forward {
   from {
     transform: translateX(0);
   }
   to {
     transform: translateX(-100%);
+  }
+}
+@keyframes react-router-transition-back {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(100%);
   }
 }
 
