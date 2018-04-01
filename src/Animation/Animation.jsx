@@ -177,6 +177,7 @@ class Animation extends React.Component {
     )
   }
 }
+//remove wrap class
 
 Animation.defaultProps = {
 
