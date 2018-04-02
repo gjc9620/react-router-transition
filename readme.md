@@ -4,6 +4,6 @@
 
 
 ## todo
-more flexible
-support redux
+* more flexible
+* support redux
 
